@@ -1,0 +1,22 @@
+[package]
+name = "bevy-gpui"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+bevy = "0.19.1"
+# gpui is not regularly published to crates.io; track Zed's repo at a pinned commit.
+# Newer commits add a lint test fixture also named `gpui` (tooling/lints/test_fixture/gpui),
+# which makes cargo resolve the wrong package from the git source.
+gpui = { git = "https://github.com/zed-industries/zed", rev = "b77ec90b2e6585622099235d9fb7d708d22ad956" }
+# `runtime_shaders` avoids needing the `metal` CLI (full Xcode) at build time.
+gpui_platform = { git = "https://github.com/zed-industries/zed", rev = "b77ec90b2e6585622099235d9fb7d708d22ad956", features = ["font-kit", "runtime_shaders", "wayland", "x11"] }
+image = "0.25"
+smallvec = "1"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
